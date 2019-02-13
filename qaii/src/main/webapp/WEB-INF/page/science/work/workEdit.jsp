@@ -422,23 +422,24 @@ $.post({
 <script type="text/javascript">
 //封面电子版文件点击事件-在线预览
 $("#workOnline").click(function(){
-	/* var ops="http://"+window.location.host+"/"; */ //调整时开放此数据
+	var ops="https://"+window.location.host+"/";  //调整时开放此数据
 	var address=$('input[name="workfile"]').val();
 	var reg1=new RegExp("jpg","i");
 	var reg2=new RegExp("pdf","i");
 	var reg3=new RegExp("png","i");
 	if(reg1.test(address)||reg2.test(address)||reg3.test(address)){
-		/* window.open(ops+address); */
-		window.open(address);
+		 window.open(ops+address);
+		/*window.open(address);*/
 	}else{
 		alert("系统目前暂不支持非图片和pdf文件的预览!其他文件请下载到本地预览。");
 	};
 })
 //封面电子版文件点击事件-下载
 $("#workDownload").click(function(){
+    var ops="https://"+window.location.host+"/";  //调整时开放此数据
 	var address=$('input[name="workfile"]').val();
-	/* download(ops+address); */
-	download(address);
+	 download(ops+address);
+	/*download(address);*/
 })
 //封面电子版文件点击事件-重新上传
 $("#upload").click(function(){
@@ -455,23 +456,24 @@ $("#upload").click(function(){
 })
 //目录文件点击事件-在线预览
 $("#workOnline2").click(function(){
-	/* var ops="http://"+window.location.host+"/"; */ //调整时开放此数据
+	var ops="https://"+window.location.host+"/";  //调整时开放此数据
 	var address=$('input[name="workfile2"]').val();
 	var reg1=new RegExp("jpg","i");
 	var reg2=new RegExp("pdf","i");
 	var reg3=new RegExp("png","i");
 	if(reg1.test(address)||reg2.test(address)||reg3.test(address)){
-		/* window.open(ops+address); */
-		window.open(address);
+		 window.open(ops+address);
+		/*window.open(address);*/
 	}else{
 		alert("系统目前暂不支持非图片和pdf文件的预览!其他文件请下载到本地预览。");
 	};
 })
 //目录文件点击事件-下载
 $("#workDownload2").click(function(){
+    var ops="https://"+window.location.host+"/";  //调整时开放此数据
 	var address=$('input[name="workfile2"]').val();
-	/* download(ops+address); */
-	download(address);
+	download(ops+address);
+	/*download(address);*/
 })
 //目录文件点击事件-重新上传
 $("#upload2").click(function(){
@@ -488,23 +490,24 @@ $("#upload2").click(function(){
 })
 //首页文件点击事件-在线预览
 $("#workOnline3").click(function(){
-	/* var ops="http://"+window.location.host+"/"; */ //调整时开放此数据
+	var ops="https://"+window.location.host+"/";  //调整时开放此数据
 	var address=$('input[name="workfile3"]').val();
 	var reg1=new RegExp("jpg","i");
 	var reg2=new RegExp("pdf","i");
 	var reg3=new RegExp("png","i");
 	if(reg1.test(address)||reg2.test(address)||reg3.test(address)){
-		/* window.open(ops+address); */
-		window.open(address);
+		window.open(ops+address);
+		/*window.open(address);*/
 	}else{
 		alert("系统目前暂不支持非图片和pdf文件的预览!其他文件请下载到本地预览。");
 	};
 })
 //首页文件点击事件-下载
 $("#workDownload2").click(function(){
+    var ops="https://"+window.location.host+"/";  //调整时开放此数据
 	var address=$('input[name="workfile3"]').val();
-	/* download(ops+address); */
-	download(address);
+	 download(ops+address);
+	/*download(address);*/
 })
 //首页文件点击事件-重新上传
 $("#upload3").click(function(){
@@ -520,12 +523,20 @@ $("#upload3").click(function(){
 	});
 })
 function download(src) {
-    var $a = document.createElement('a');
-    $a.setAttribute("href", src);
-    $a.setAttribute("download", "");
-    var evObj = document.createEvent('MouseEvents');
-    evObj.initMouseEvent( 'click', true, true, window, 0, 0, 0, 0, 0, false, false, true, false, 0, null);
-    $a.dispatchEvent(evObj);
+    var form = $("<form>");
+    form.attr("style","display:none");
+    form.attr("target","");
+    form.attr("method","post");
+    form.attr("action",  "Fileupload.do");
+    var input1 = $("<input>");
+    input1.attr("type","hidden");
+    input1.attr("dataType","json");
+    input1.attr("name","strZipPath");
+    input1.attr("value", src);
+    $("body").append(form);
+    form.append(input1);
+    form.submit();
+    form.remove();
 };
 </script>
 </body>
