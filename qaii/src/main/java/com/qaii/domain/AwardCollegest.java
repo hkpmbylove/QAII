@@ -10,7 +10,7 @@ import java.util.Date;
 //解决接口中奖励荣誉获奖情况只查看四个字段的情况
 public class AwardCollegest {
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    private Date awardTime;
+    private String awardTime;
 
     private String awardLevel;
 
@@ -18,11 +18,11 @@ public class AwardCollegest {
 
     private String awardName;
 
-    public Date getAwardTime() {
+    public String getAwardTime() {
         return awardTime;
     }
 
-    public void setAwardTime(Date awardTime) {
+    public void setAwardTime(String awardTime) {
         this.awardTime = awardTime;
     }
 

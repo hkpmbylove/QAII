@@ -155,9 +155,9 @@ public String outLogin(HttpServletRequest req,HttpServletResponse res,HttpSessio
     public String changePwd(HttpServletRequest req,HttpServletResponse res,HttpSession session)throws IOException{
         return"page/changePwd";
     }
-@ResponseBody
-@RequestMapping( value = "DellUserAccount.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8" )
-public JsonResult DellUserAccount(@RequestParam( value = "requestDate[]" ) Integer[]userId){
+    @ResponseBody
+    @RequestMapping( value = "DellUserAccount.do", method = RequestMethod.POST, produces = "application/json;charset=UTF-8" )
+    public JsonResult DellUserAccount(@RequestParam( value = "requestDate[]" ) Integer[]userId){
 
         int row=userServivce.delete(userId);
         if(row!=0){

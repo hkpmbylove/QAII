@@ -119,11 +119,18 @@ public class EmpInfo {
 	private String empOthereducationpro;
 	
 	private String empOthergraduationtime;
-	
-	
-	
-	
-    
+
+	//新增用来存储消息管理处理状态
+    private int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     public String getEmpOthereducation() {
 		return empOthereducation;
 	}

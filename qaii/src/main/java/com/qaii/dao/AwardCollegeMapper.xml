@@ -44,7 +44,7 @@
       activity_name, orgnizer, remark, 
       alternative_one, alternative_two, alternative_three, 
       gmt_create, gmt_modified)
-    values (#{id,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{awardTime,jdbcType=DATE}, 
+    values (#{id,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{awardTime,jdbcType=DATE},
       #{awardLevel,jdbcType=VARCHAR}, #{awardUnit,jdbcType=VARCHAR}, #{awardName,jdbcType=VARCHAR}, 
       #{activityName,jdbcType=VARCHAR}, #{orgnizer,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
       #{alternativeOne,jdbcType=VARCHAR}, #{alternativeTwo,jdbcType=VARCHAR}, #{alternativeThree,jdbcType=VARCHAR}, 

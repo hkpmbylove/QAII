@@ -145,5 +145,8 @@ public class EmpInfoServiceImpl implements EmpInfoService{
 		return empinfoService.countTitleLevel(title);
 	}
 
-
+	@Override
+	public int updateStatus(Integer id) {
+		return empinfoService.updateStatus(id);
+	}
 }

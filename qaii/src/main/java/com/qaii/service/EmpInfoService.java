@@ -43,6 +43,8 @@ public interface EmpInfoService {
 	List<EmpInfo> getIDexpire(String date);
 	
 	int updateReview(String msg,int id);
+
+	int updateStatus(Integer id);
 	
 	List <EmpInfo> getallinjobEmp();
 	

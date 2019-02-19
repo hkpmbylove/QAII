@@ -104,7 +104,7 @@
       emp_tryOutEndTime, emp_contractEndTime, emp_contractSignedNum, 
       emp_returnee, emp_foreign, emp_remarks, 
       emp_reviewStatus,emp_stat, emp_departureTime, emp_tryStatus, emp_contractStatus,
-      emp_title,emp_othereducation,emp_othereducationschool,emp_othereducationpro,emp_othergraduationtime)
+      emp_title,emp_othereducation,emp_othereducationschool,emp_othereducationpro,emp_othergraduationtime,status)
     values (#{id,jdbcType=INTEGER}, #{eid,jdbcType=VARCHAR}, #{empNum,jdbcType=VARCHAR}, 
       #{empName,jdbcType=VARCHAR}, #{empGender,jdbcType=VARCHAR}, #{empDept,jdbcType=VARCHAR}, 
       #{empPosition,jdbcType=VARCHAR}, #{empHireStarttime,jdbcType=VARCHAR}, #{empIdcard,jdbcType=VARCHAR}, 
@@ -124,7 +124,7 @@
       #{empReviewstatus,jdbcType=VARCHAR}, #{empStat,jdbcType=VARCHAR}, #{empDepartureTime,jdbcType=VARCHAR},
       #{empTryStatus,jdbcType=VARCHAR}, #{empContractStatus,jdbcType=VARCHAR},#{empTitle,jdbcType=VARCHAR},
       #{empOthereducation,jdbcType=VARCHAR},#{empOthereducationschool,jdbcType=VARCHAR},
-      #{empOthereducationpro,jdbcType=VARCHAR}, #{empOthergraduationtime,jdbcType=VARCHAR})
+      #{empOthereducationpro,jdbcType=VARCHAR}, #{empOthergraduationtime,jdbcType=VARCHAR},#{status,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.qaii.domain.EmpInfo" >
     insert into emp_info
@@ -585,13 +585,13 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   	<select id="checkbyContract" resultMap="BaseResultMap" parameterType="java.lang.String">
-		SELECT	* FROM	emp_info WHERE	emp_contractStatus = '1' AND emp_stat='1' AND emp_reviewStatus='通过'
+		SELECT	* FROM	emp_info WHERE	emp_contractStatus = '1' AND emp_stat='1' AND emp_reviewStatus='通过' AND status=0
 		<if test="_parameter!=null">
 			and emp_contractEndTime &lt; #{empContractendtime,jdbcType=VARCHAR}
 		</if>
 	</select>
 	<select id="checkbyTry" resultMap="BaseResultMap" parameterType="java.lang.String">
-		SELECT	*FROM	emp_info WHERE	emp_tryStatus = '1' AND emp_stat='1' AND emp_reviewStatus='通过'
+		SELECT	*FROM	emp_info WHERE	emp_tryStatus = '1' AND emp_stat='1' AND emp_reviewStatus='通过' AND status=0
 		<if test="_parameter!=null">
 			and emp_tryOutEndTime &lt; #{empTryoutendtime,jdbcType=VARCHAR}
 		</if>
@@ -640,11 +640,15 @@
  		SELECT * from emp_info WHERE emp_stat ='1' AND emp_reviewStatus=#{0}
  	</select>
  	<select id="getIDexpire" resultMap="BaseResultMap" parameterType="java.lang.String">
- 		SELECT * from emp_info WHERE emp_idcard_endTime &lt;=#{0} AND emp_reviewStatus='通过'
+ 		SELECT * from emp_info WHERE emp_idcard_endTime &lt;=#{0} AND emp_reviewStatus='通过' AND status=0
  	</select>
  	<update id="updateReview">
  		UPDATE emp_info SET  emp_reviewStatus= #{0} WHERE id = #{1}
  	</update>
+<!--修改消息管理状态-->
+  <update id="updateStatus">
+ 		UPDATE emp_info SET  status=0 where id=#{0}
+  </update>
  	
  	<update id="updataempStatus" parameterType="com.qaii.domain.EmpInfo">
  		update emp_info set emp_stat=0,emp_departureTime=#{empDepartureTime,jdbcType=VARCHAR} where id=#{id,jdbcType=INTEGER}
