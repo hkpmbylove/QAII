@@ -146,7 +146,17 @@ public class EmpInfoServiceImpl implements EmpInfoService{
 	}
 
 	@Override
-	public int updateStatus(Integer id) {
-		return empinfoService.updateStatus(id);
+	public int uptryoutendStatus(Integer id) {
+		return empinfoService.uptryoutendStatus(id);
+	}
+
+	@Override
+	public int upcontractendtimeStatus(Integer id) {
+		return empinfoService.upcontractendtimeStatus(id);
+	}
+
+	@Override
+	public int upidcardStatus(Integer id) {
+		return empinfoService.upidcardStatus(id);
 	}
 }

@@ -121,14 +121,34 @@ public class EmpInfo {
 	private String empOthergraduationtime;
 
 	//新增用来存储消息管理处理状态
-    private int status;
+    private int tryoutendstatus;
 
-    public int getStatus() {
-        return status;
+    private int idcardstatus;
+
+    private int contractendtimestatus;
+
+    public int getTryoutendstatus() {
+        return tryoutendstatus;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setTryoutendstatus(int tryoutendstatus) {
+        this.tryoutendstatus = tryoutendstatus;
+    }
+
+    public int getIdcardstatus() {
+        return idcardstatus;
+    }
+
+    public void setIdcardstatus(int idcardstatus) {
+        this.idcardstatus = idcardstatus;
+    }
+
+    public int getContractendtimestatus() {
+        return contractendtimestatus;
+    }
+
+    public void setContractendtimestatus(int contractendtimestatus) {
+        this.contractendtimestatus = contractendtimestatus;
     }
 
     public String getEmpOthereducation() {

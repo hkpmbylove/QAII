@@ -59,6 +59,7 @@
 			<div class="messagecontern">
 				<table class="layui-table" id="testTable2" lay-filter="demo2" style="margin-top:5px;width: 100% !important;"></table>
 				<script type="text/html" id="barDemo2">
+				  <a class="layui-btn layui-btn-xs layui-btn-tired" lay-event="delidcard">已处理</a>
 				  <a class="layui-btn layui-btn-xs" href="seeEmpInfo.do?userId='{{d.id}}'" target="_blank">查看详情</a>
 				</script>
 			</div>
@@ -74,6 +75,7 @@
 			<div class="messagecontern">
 				<table class="layui-table" id="testTable3" lay-filter="demo3" style="margin-top:5px;width: 100% !important;"></table>
 				<script type="text/html" id="barDemo3">
+					<a class="layui-btn layui-btn-xs layui-btn-tired" lay-event="delsy">已处理</a>
 				  <a class="layui-btn layui-btn-xs" href="seeEmpInfo.do?userId='{{d.id}}'" target="_blank">查看详情</a>
 				</script>
 			</div>
@@ -89,6 +91,7 @@
 			<div class="messagecontern">
 				<table class="layui-table" id="testTable4" lay-filter="demo4" style="margin-top:5px;width: 100% !important;"></table>
 				<script type="text/html" id="barDemo4">
+					<a class="layui-btn layui-btn-xs layui-btn-tired" lay-event="delht">已处理</a>
 				  <a class="layui-btn layui-btn-xs" lay-event="detail" href="seeEmpInfo.do?userId='{{d.id}}'" target="_blank">查看详情</a>
 				</script>
 			</div>
@@ -148,7 +151,7 @@ layui.use('table', function(obj){
 	page: false,
 	method:'post',
 	limit:9999999,//不设置分页，最大数据量为9999999
-	id: 'testReload', 
+	id: 'testReload',
 //    height: 332,
 //    ,url: '/demo/table/user/' //数据接口
 	url:"getstatusbyreview.do",
@@ -188,7 +191,7 @@ layui.use('table', function(obj){
     			}
     		})
     	})
-      
+
     } else if(layEvent === 'del'){
       layer.confirm('确定驳回申请', function(index){
     	  let arr=[data.id];
@@ -206,18 +209,18 @@ layui.use('table', function(obj){
           			layer.alert("删除失败")
           		}
           	}
-          }) 	
+          })
       });
-    } 
+    }
   });
-	
-	
+
+
   //身份证到期
   table.render({
     elem: '#testTable2',
 	page: false,
 	limit:9999999,//不设置分页，最大数据量为9999999
-	id: 'testReload2', 
+	id: 'testReload2',
 	method:'post',
 //    height: 332,
 //    ,url: '/demo/table/user/' //数据接口
@@ -232,12 +235,21 @@ layui.use('table', function(obj){
 		{field: 'empPosition', title: '职务',sort: true},
 		{field: 'empIdcard', title: '身份证号'},
 		{field: 'empIdcardEndtime', title: '身份证到期时间',sort: true},
-		{field: 'sex', title: '操作',toolbar: '#barDemo2'}
+		{field: 'sex', title: '操作',toolbar: '#barDemo2',width:230}
     ]],
 	  //表格数据
     data:obj.data
   });
 
+    //监听工具条
+    table.on('tool(demo2)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+        var data = obj.data //获得当前行数据
+            ,layEvent = obj.event; //获得 lay-event 对应的值
+         if(layEvent === 'delidcard'){
+             var iframesrc="upidcardStatus.do?id="+data.id;
+             $("body", parent.document).find('iframe').attr('src',iframesrc);
+        }
+    });
 
 
 //试用期到期
@@ -245,7 +257,7 @@ layui.use('table', function(obj){
     elem: '#testTable3',
 	page: false,
 	limit:9999999,//不设置分页，最大数据量为9999999
-	id: 'testReload3', 
+	id: 'testReload3',
 //    height: 332,
 //    ,url: '/demo/table/user/' //数据接口
 	url:'getTryemp.do',
@@ -261,12 +273,20 @@ layui.use('table', function(obj){
 		{field: 'empWorktype', title: '用工形式',sort: true},
 		{field: 'empInductiontime', title: '入职时间',sort: true},
 		{field: 'empTryoutendtime', title: '试用期结束日期',sort: true},
-		{field: 'sex', title: '操作',toolbar: '#barDemo3'}
+		{field: 'sex', title: '操作',toolbar: '#barDemo3',width:230}
     ]],
 	  //表格数据
     data: obj.data
   });
-
+//监听工具条
+    table.on('tool(demo3)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+        var data = obj.data //获得当前行数据
+            ,layEvent = obj.event; //获得 lay-event 对应的值
+        if(layEvent === 'delsy'){
+            var iframesrc="uptryoutendStatus.do?id="+data.id;
+            $("body", parent.document).find('iframe').attr('src',iframesrc);
+        }
+    });
 
 
 
@@ -275,7 +295,7 @@ layui.use('table', function(obj){
     elem: '#testTable4',
 	page: false,
 	limit:9999999,//不设置分页，最大数据量为9999999
-	id: 'testReload4', 
+	id: 'testReload4',
 //    height: 332,
 //    ,url: '/demo/table/user/' //数据接口
 	url:'getConemp.do',
@@ -293,12 +313,20 @@ layui.use('table', function(obj){
 		{field: 'empInductiontime', title: '入职时间',sort: true},
 		{field: 'empContractendtime', title: '合同期满日期',sort: true},
 		{field: 'empContractsignednum', title: '合同签订次数',sort: true},
-		{field: 'sex', title: '操作',toolbar: '#barDemo4'}
+		{field: 'sex', title: '操作',toolbar: '#barDemo4',width:230}
     ]],
 	  //表格数据
     data: obj.data
   });
-
+//监听工具条
+    table.on('tool(demo4)', function(obj){ //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+        var data = obj.data //获得当前行数据
+            ,layEvent = obj.event; //获得 lay-event 对应的值
+        if(layEvent === 'delht'){
+            var iframesrc="upcontractendtimeStatus.do?id="+data.id;
+            $("body", parent.document).find('iframe').attr('src',iframesrc);
+        }
+    });
 
 
 });
@@ -307,7 +335,7 @@ layui.use('table', function(obj){
 $('#pelupdate').on('click', function(){
 	window.location.reload();
 	alert("数据更新成功");
-  });	
+  });
 </script>
 </body>
 </html>        

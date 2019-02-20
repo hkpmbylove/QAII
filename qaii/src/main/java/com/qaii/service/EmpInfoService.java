@@ -44,8 +44,12 @@ public interface EmpInfoService {
 	
 	int updateReview(String msg,int id);
 
-	int updateStatus(Integer id);
-	
+	int uptryoutendStatus(Integer id);
+
+	int upcontractendtimeStatus(Integer id);
+
+	int upidcardStatus(Integer id);
+
 	List <EmpInfo> getallinjobEmp();
 	
 	List<EmpInfo> findTimpEMpinfo(String startTime,String endTime);

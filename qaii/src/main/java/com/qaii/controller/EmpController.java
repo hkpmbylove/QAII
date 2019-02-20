@@ -91,7 +91,9 @@ public class EmpController {
 		empInfo.setEmpDepartureTime("");
 		empInfo.setEmpTryStatus("1");
 		empInfo.setEmpContractStatus("1");
-		empInfo.setStatus(0);
+		empInfo.setTryoutendstatus(0);
+        empInfo.setIdcardstatus(0);
+        empInfo.setContractendtimestatus(0);
 		CountDatetoNowDays.TranstoStamp(empInfo);
 
 		int row = empInfoService.insert(empInfo);
@@ -588,12 +590,26 @@ public class EmpController {
 	}
 
 
-	//消息管理修改状态为已处理
-	@RequestMapping(value="upStatus.do",method=RequestMethod.POST)
+	//消息管理试用期到期修改状态为已处理
+	@RequestMapping("uptryoutendStatus.do")
 	@ResponseBody
 	public int upStatus(@RequestParam("id")Integer id) {
-		return empInfoService.updateStatus(id);
+		return empInfoService.uptryoutendStatus(id);
 	}
+
+    //消息管理合同到期修改状态为已处理
+    @RequestMapping("upcontractendtimeStatus.do")
+    @ResponseBody
+    public int upcontractendtimeStatus(@RequestParam("id")Integer id) {
+        return empInfoService.upcontractendtimeStatus(id);
+    }
+
+    //消息管理身份证到期修改状态为已处理
+    @RequestMapping("upidcardStatus.do")
+    @ResponseBody
+    public int upidcardStatus(@RequestParam("id")Integer id) {
+        return empInfoService.upidcardStatus(id);
+    }
 
 	//更新员工的审核状态为通过
 	@RequestMapping(value="upReview.do",method=RequestMethod.POST)
