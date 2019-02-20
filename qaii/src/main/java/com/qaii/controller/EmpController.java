@@ -42,6 +42,7 @@ import com.qaii.util.CountDatetoNowDays;
 import com.qaii.util.CustomException;
 import com.qaii.util.JsonResult;
 import com.qaii.util.Layui;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class EmpController {
@@ -593,22 +594,25 @@ public class EmpController {
 	//消息管理试用期到期修改状态为已处理
 	@RequestMapping("uptryoutendStatus.do")
 	@ResponseBody
-	public int upStatus(@RequestParam("id")Integer id) {
-		return empInfoService.uptryoutendStatus(id);
+	public ModelAndView upStatus(@RequestParam("id")Integer id) {
+		int row=empInfoService.uptryoutendStatus(id);
+		return new ModelAndView("page/personnel/newsPersonnel");
 	}
 
     //消息管理合同到期修改状态为已处理
     @RequestMapping("upcontractendtimeStatus.do")
     @ResponseBody
-    public int upcontractendtimeStatus(@RequestParam("id")Integer id) {
-        return empInfoService.upcontractendtimeStatus(id);
+    public ModelAndView upcontractendtimeStatus(@RequestParam("id")Integer id) {
+		int row=empInfoService.upcontractendtimeStatus(id);
+		return new ModelAndView("page/personnel/newsPersonnel");
     }
 
     //消息管理身份证到期修改状态为已处理
     @RequestMapping("upidcardStatus.do")
     @ResponseBody
-    public int upidcardStatus(@RequestParam("id")Integer id) {
-        return empInfoService.upidcardStatus(id);
+    public ModelAndView upidcardStatus(@RequestParam("id")Integer id) {
+		int row=empInfoService.upidcardStatus(id);
+		return new ModelAndView("page/personnel/newsPersonnel");
     }
 
 	//更新员工的审核状态为通过
