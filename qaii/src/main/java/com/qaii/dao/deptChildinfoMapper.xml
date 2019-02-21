@@ -86,8 +86,7 @@
 
   <update id="updateDeptInfoById" parameterType="com.qaii.domain.deptChildinfo">
     update dept_childinfo
-    set dept_name = #{deptName,jdbcType=VARCHAR},
-      desc = #{desc,jdbcType=VARCHAR}
+    set dept_name = #{deptName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

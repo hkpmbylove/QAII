@@ -75,7 +75,7 @@ public class ChildDeptController {
     //系统管理二级菜单删除部门信息
     @ResponseBody
     @RequestMapping(value="dellDeptInfos.do", method=RequestMethod.POST,produces="application/json;charset=UTF-8")
-    public JsonResult DellempInfo(@RequestParam(value = "requestDate") Integer id ){
+    public JsonResult DellempInfo(@RequestParam(value = "requestDate") Integer id ) {
         int row=childdeptService.deleteByPrimaryKey(id);
         if(row!=0) {
             return  new JsonResult(row);
