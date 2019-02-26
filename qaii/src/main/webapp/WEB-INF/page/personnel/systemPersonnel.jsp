@@ -33,6 +33,42 @@
 		    box-sizing: border-box;
 		}
 	}
+	  .treefir{
+		  min-width: 40%;
+		  max-width: 60%;
+		  overflow: hidden;
+		  text-overflow: ellipsis;
+		  white-space: nowrap;
+		  display: inline-block;
+		  height: 35px;
+		  border: 1px #ededed solid;
+		  line-height: 35px;
+		  padding-left: 25px;
+		  background: #f0f0f0;
+		  color: #888;
+		  font-size: 16px;
+		  vertical-align: middle;
+	  }
+	  .treechild{
+		  margin-left: 30px;
+		  margin-top:5px;
+	  }
+	.terrchildc{
+		margin-top:5px;
+		padding-left:10px;
+		color: #888;
+		font-size: 14px;
+		min-width: 40%;
+		max-width: 60%;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		display: inline-block;
+		background: #f7f7f7;
+		height:35px;
+		line-height: 35px;
+		vertical-align: middle;
+	}
   </style>
 </head>
 <body id="bodyHei">
@@ -51,114 +87,85 @@
 
 	</div>
 	<div class="systemBox">
-		<table class="layui-hide" id="systemTest" lay-filter="demo"></table>
-
-		<script type="text/html" id="bar">
-		  <input type="text" class="department" name="deptName" value="{{d.deptName}}">
-		</script>
-		<script type="text/html" id="barDemo">
-			<a class="layui-btn layui-btn-xs button" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
-            <a class="layui-btn layui-btn-xs button" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>添加二级部门</a>
-			<a class="layui-btn layui-btn-xs button" lay-event="del"><i class="layui-icon layui-icon-delete"></i>移除</a>
-		</script>
-		<%--<div class="site-demo-button" id="layerDemo" style="margin-bottom: 0;">
-			<button data-method="offset" data-type="auto" class="layui-btn layui-btn-normal systemAdd">
-				<img src="${basePath}/image/add.png" />
-			</button>
-		</div>--%>
+		<ul id="demo">
+			<%--<li name="fir">
+				<div>
+					<div class="treefir">研究院</div>
+					<a class="layui-btn layui-btn-xs" style="margin-left:20px;"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+					<a class="layui-btn layui-btn-xs layui-btn-edit"><i class="layui-icon layui-icon-edit"></i>添加二级部门</a>
+					<a class="layui-btn layui-btn-xs layui-btn-danger"><i class="layui-icon layui-icon-delete"></i>移除</a>
+				</div>
+				<ul class="treechild">
+					<li name="child1">
+						<div>
+							<div class="terrchildc">研究院</div>
+							<a class="layui-btn layui-btn-xs button" style="margin-left:20px;"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+							<a class="layui-btn layui-btn-xs button" ><i class="layui-icon layui-icon-delete"></i>移除</a>
+						</div>
+					</li>
+					<li name="child2">
+						<div>
+							<div class="terrchildc">研究院</div>
+							<a class="layui-btn layui-btn-xs button" style="margin-left:20px;"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+							<a class="layui-btn layui-btn-xs button" ><i class="layui-icon layui-icon-delete"></i>移除</a>
+						</div>
+					</li>
+					<li name="child3">
+						<div>
+							<div class="terrchildc">研究院</div>
+							<a class="layui-btn layui-btn-xs button" style="margin-left:20px;"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+							<a class="layui-btn layui-btn-xs button" ><i class="layui-icon layui-icon-delete"></i>移除</a>
+						</div>
+					</li>
+					<li name="child4">
+						<div>
+							<div class="terrchildc">研究院</div>
+							<a class="layui-btn layui-btn-xs button" style="margin-left:20px;"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+							<a class="layui-btn layui-btn-xs button" ><i class="layui-icon layui-icon-delete"></i>移除</a>
+						</div>
+					</li>
+				</ul>
+			</li>--%>
+		</ul>
 	</div>
 	
 
 <script src="${basePath}/commen/layui/layui.js"></script>
 <script>
-layui.use('table', function(obj){
-  var table = layui.table
-  ,form = layui.form;
-  
-  table.render({
-    elem: '#systemTest',
-    method:'post',
-    url:'findDeptInfoList.do',
-    cellMinWidth: 80,
-    cols: [[
-      {field:'id', title:'ID', type:'numbers',width:80},
-      {field:'deptName', title:'部门', templet: '#bar'},
-      {field:'sex', title:'operation', templet: '#barDemo',width:350}
-    ]],
-	  data:obj//数据填充id为部门个数，department为部门名称
-  });
- //监听工具条
-  table.on('tool(demo)', function(obj){
-    var data = obj.data;
-    if(obj.event === 'detail'){
-      layer.msg('ID：'+ data.id + ' 的查看操作');
-    } else if(obj.event === 'del'){
-      layer.confirm('真的删除行么', function(index){
-          let arr=data.id;
-          $.post({
-          	url:"dellDeptInfo.do",
-          	data:{
-          		"requestDate" : arr
-          	},
-          	success:function(data){
-          		if(data.data){
-          		    //删除对应行（tr）的DOM结构
-          			obj.del();
-          			layer.close(index);
-          		}else{
-          			layer.alert("移除失败")
-          		}
-          		
-          	}
-          }) 
-      });
-    } else if(obj.event === 'edit'){
-      //layer.alert('编辑行：<br>'+ JSON.stringify(data.deptName))
-    	var edit='<div class="layui-form-item" style="padding:15px;padding-bottom:0px;">'+
-		'<label style="padding:9px 5px;">部门编辑</label>'+
-		'<input id="sys-edit" name="interest" lay-filter="aihao" value="'+
-		data.deptName+
-		'" style="margin-left:10px;height:36px;width:120px;color:#888;border:1px solid #d7d7d7;border-radius:3px;">'+
-		'</input>'+
-		'</div>';
-		layer.open({
-		  type: '部门编辑', 
-		  content:edit //这里content是一个普通的String,
-		  ,btn: ['提交修改', '关闭']
-		  ,yes: function(index, layero){
-		    //提交修改按钮
-		    var data = obj.data;
-			var role=$("#sys-edit").val();
-		    var id=data.id;
-		    
-			$.post({
-				url:"uptateDeptInfo.do",
-				data:{
-					deptName:role,
-					id:id
-				},
-				success:function(data){
-					if(data.data){
-						alert("修改成功")
-					}else{
-						alert("修改失败")
-					}
-				}
-			})
+    $(document).ready(function(){
+        let html="";
+        html="<li name='fir' style='margin-bottom:15px'>" +
 
-	
-		  }
-		  ,'关闭': function(index, layero){
-		    //关闭按钮
-		  }
-		});
-    }
-  });
-  
+            "<div>" +
+            "<div class='treefir'>研究院</div>" +
+            "<a class='layui-btn layui-btn-xs fedit' style='margin-left:20px;'><i class='layui-icon layui-icon-edit'></i>编辑</a>" +
+            "<a class='layui-btn layui-btn-xs layui-btn-edit fadd' ><i class='layui-icon layui-icon-edit'></i>添加二级部门</a>" +
+            "<a class='layui-btn layui-btn-xs layui-btn-danger fdel'><i class='layui-icon layui-icon-delete'></i>移除</a>" +
+            "</div>" +
 
-  
-});
-	
+            "<ul class='treechild'>" +
+
+            "<li name='child1'>" +
+            "<div>" +
+            "<div class='terrchildc'>研究院</div>" +
+            "<a class='layui-btn layui-btn-xs button sedit' style='margin-left:20px;'><i class='layui-icon layui-icon-edit'></i>编辑</a>" +
+            "<a class='layui-btn layui-btn-xs button sdel' ><i class='layui-icon layui-icon-delete'></i>移除</a>" +
+            "</div>" +
+            "</li>" +
+
+            "<li name='child2'>" +
+            "<div>" +
+            "<div class='terrchildc'>研究院</div>" +
+            "<a class='layui-btn layui-btn-xs button sedit' style='margin-left:20px;'><i class='layui-icon layui-icon-edit'></i>编辑</a>" +
+            "<a class='layui-btn layui-btn-xs button sdel' ><i class='layui-icon layui-icon-delete'></i>移除</a>" +
+            "</div>" +
+            "</li>" +
+
+            "</ul>" +
+            "</li>";
+        html=html+html;
+        $("#demo").append(html);
+    });
 	
 //添加信息框	
 	
@@ -174,7 +181,7 @@ layui.use('layer', function(){ //独立版的layer无需执行这一句
       var type = othis.data('type')
       ,text = othis.text();
       var addedit='<div class="layui-form-item" style="padding:15px;padding-bottom:0px;">'+
-		'<label style="padding:9px 5px;">部门添加</label>'+
+		'<label style="padding:9px 5px;">一级部门添加</label>'+
 		'<input id="sys-add" name="interest" lay-filter="aihao" style="margin-left:10px;height:36px;width:120px;color:#888;border:1px solid #d7d7d7;border-radius:3px;">'+
 		'</input>'+
 		'</div>';
@@ -219,6 +226,138 @@ layui.use('layer', function(){ //独立版的layer无需执行这一句
   });
   
 });
+
+//点击事件
+	/*一级修改*/
+    $("#demo").on("click", ".fedit", function(){
+        let id=$(this).parents("li").attr("name");
+        let str='<div class="layui-form-item" style="padding:15px;padding-bottom:0px;">'+
+        '<label style="padding:9px 5px;">一级部门修改</label>'+
+        '<input id="sys-add" name="interest" lay-filter="aihao" style="margin-left:10px;height:36px;width:120px;color:#888;border:1px solid #d7d7d7;border-radius:3px;">'+
+        '</input>'+
+        '</div>';
+        layer.open({
+            type: 1
+            ,content: str
+            ,btn: ['提交', '关闭']
+            ,yes: function(index, layero){
+                //提交修改按钮
+                var role=$("#sys-add").val();
+                if(role==null){
+                    alert("请输入内容")
+                }else{
+                    $.post({
+                        url:"addDeptInfo.do",
+                        data:{
+                            deptName:role
+                        },
+                        success:function(data){
+                            if(data.data){
+                                alert("添加成功")
+                            }else{
+                                alert("添加失败")
+                            }
+                        }
+                    })
+                }
+
+            }
+            ,'关闭': function(index, layero){
+                //关闭按钮
+            }
+        });
+        /*alert("段落被点击了edit。"+id);*/
+    });
+    /*一级添加二级*/
+    $("#demo").on("click", ".fadd", function(){
+        let id=$(this).parents("li").attr("name");
+        let str='<div class="layui-form-item" style="padding:15px;padding-bottom:0px;">'+
+            '<label style="padding:9px 5px;">添加二级部门</label>'+
+            '<input id="sys-add" name="interest" lay-filter="aihao" style="margin-left:10px;height:36px;width:120px;color:#888;border:1px solid #d7d7d7;border-radius:3px;">'+
+            '</input>'+
+            '</div>';
+        layer.open({
+            type: 1
+            ,content: str
+            ,btn: ['提交', '关闭']
+            ,yes: function(index, layero){
+                //提交修改按钮
+                var role=$("#sys-add").val();
+                if(role==null){
+                    alert("请输入内容")
+                }else{
+                    $.post({
+                        url:"addDeptInfo.do",
+                        data:{
+                            deptName:role
+                        },
+                        success:function(data){
+                            if(data.data){
+                                alert("添加成功")
+                            }else{
+                                alert("添加失败")
+                            }
+                        }
+                    })
+                }
+
+            }
+            ,'关闭': function(index, layero){
+                //关闭按钮
+            }
+        });
+        /*alert("段落被点击了add。"+id);*/
+    });
+    /*一级删除*/
+    $("#demo").on("click", ".fdel", function(){
+        let id=$(this).parents("li").attr("name");
+        alert("段落被点击了del。"+id);
+    });
+    /*二级修改*/
+    $("#demo").on("click", ".sedit", function(){
+        let id=$(this).parents("li").attr("name");
+        let str='<div class="layui-form-item" style="padding:15px;padding-bottom:0px;">'+
+            '<label style="padding:9px 5px;">二级部门修改</label>'+
+            '<input id="sys-add" name="interest" lay-filter="aihao" style="margin-left:10px;height:36px;width:120px;color:#888;border:1px solid #d7d7d7;border-radius:3px;">'+
+            '</input>'+
+            '</div>';
+        layer.open({
+            type: 1
+            ,content: str
+            ,btn: ['提交', '关闭']
+            ,yes: function(index, layero){
+                //提交修改按钮
+                var role=$("#sys-add").val();
+                if(role==null){
+                    alert("请输入内容")
+                }else{
+                    $.post({
+                        url:"addDeptInfo.do",
+                        data:{
+                            deptName:role
+                        },
+                        success:function(data){
+                            if(data.data){
+                                alert("添加成功")
+                            }else{
+                                alert("添加失败")
+                            }
+                        }
+                    })
+                }
+
+            }
+            ,'关闭': function(index, layero){
+                //关闭按钮
+            }
+        });
+        /*alert("段落被点击了sedit。"+id);*/
+    });
+    /*二级删除*/
+    $("#demo").on("click", ".sdel", function(){
+        let id=$(this).parents("li").attr("name");
+       /* alert("段落被点击了sdel。"+id);*/
+    });
 </script>
 </body>
 </html>        
