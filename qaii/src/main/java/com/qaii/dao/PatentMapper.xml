@@ -32,11 +32,36 @@
     pat_Penner, pat_Agent
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from sci_patent
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectpatentName"  resultType="java.lang.String">
+    select
+    pat_Author
+    from sci_patent
+  </select>
+
+  <select id="selectpatentName1"  resultType="java.lang.String">
+    select
+    pat_ApplyPer
+    from sci_patent
+  </select>
+
+  <select id="selectpatentName2"  resultType="java.lang.String">
+    select
+    pat_InvoicePer
+    from sci_patent
+  </select>
+
+  <select id="selectInfoByName"  resultMap="BaseResultMap">
+    select
+    *
+    from sci_patent where pat_Author like CONCAT('%',#{name},'%')or pat_ApplyPer like CONCAT('%',#{name},'%') or pat_InvoicePer like CONCAT('%',#{name},'%')
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sci_patent
     where id in   

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.qaii.domain.DeptInfo;
 import com.qaii.domain.Patent;
+import org.apache.poi.ss.formula.functions.T;
 
 public interface PatentMapper {
     int deleteByPrimaryKey(Integer[] id);
@@ -19,6 +20,14 @@ public interface PatentMapper {
     int updateByPrimaryKey(Patent record); 
 
     int selectCountbyNum();
+//新增
+    List<String> selectpatentName();
+
+    List<String> selectpatentName1();
+
+    List<String> selectpatentName2();
+
+    List<T> selectInfoByName(String name);
 
     List<Patent> findAllPatentInfo();
     

@@ -14,6 +14,11 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+
+/**
+ * Created by kunpeng on 2019/2/20 15:35
+ **/
+
 @Controller
 public class ChildDeptController {
     @Resource
@@ -60,7 +65,6 @@ public class ChildDeptController {
             return  new JsonResult(row);
         }else {
             return  new JsonResult();
-
         }
     }
 

@@ -28,6 +28,8 @@ public interface EmpInfoService {
 	int countHigherTalents(String title);
 
 	List<EmpInfo> findAllEmpInfo();
+
+	List<String> findAllEmpInfoName();
 	
 	EmpInfo findEmpinfoAndAvatarByid(Integer id);
 	

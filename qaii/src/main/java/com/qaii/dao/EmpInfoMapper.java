@@ -59,7 +59,10 @@ public interface EmpInfoMapper {
     int upidcardStatus(Integer id);
 
     List <EmpInfo> getallinjobEmp();
-    
+
+
+    List<String> findAllEmpInfoName();
+
     List<EmpInfo> findTimpEMpinfo(String startTime,String endTime);
 
     //新数据可视化高端人才新接口

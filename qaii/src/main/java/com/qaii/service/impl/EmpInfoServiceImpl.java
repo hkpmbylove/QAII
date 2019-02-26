@@ -159,4 +159,9 @@ public class EmpInfoServiceImpl implements EmpInfoService{
 	public int upidcardStatus(Integer id) {
 		return empinfoService.upidcardStatus(id);
 	}
+
+	@Override
+	public List<String> findAllEmpInfoName() {
+		return empinfoService.findAllEmpInfoName();
+	}
 }
