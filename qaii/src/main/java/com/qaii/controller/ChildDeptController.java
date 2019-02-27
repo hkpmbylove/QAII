@@ -28,13 +28,12 @@ public class ChildDeptController {
     //根据一级菜单id查询二级菜单
     @ResponseBody
     @RequestMapping(value="findDeptInfosList.do",method=RequestMethod.POST,produces="application/json;charset=UTF-8")
-    public Layui findDeptInfoList(@RequestParam Integer id) {
+    public JsonResult findDeptInfoList(@RequestParam Integer id) {
         List<deptChildinfo> list=childdeptService.selectdeptInfosById(id);
-        int count =list.size();
         if(list!=null) {
-            return Layui.data(count, list);
+            return new JsonResult(list);
         }else {
-            return Layui.data(count, list);
+            return new JsonResult();
         }
     }
 

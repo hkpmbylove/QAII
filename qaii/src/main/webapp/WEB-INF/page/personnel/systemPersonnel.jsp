@@ -133,8 +133,9 @@
 <script src="${basePath}/commen/layui/layui.js"></script>
 <script>
     $(document).ready(function(){
+        var html="";
         //获取一级菜单信息
-        let deptId=getDeptId();
+        var deptId=getDeptId();
         function getDeptId() {
             var result=null;
             $.ajax({
@@ -148,7 +149,7 @@
             return result;
 
         }
-
+         //根据一级id查询二级菜单
         function getDeptInfoById(obj) {
             var result=null;
             $.ajax({
@@ -165,34 +166,34 @@
             return result;
 
         }
-
        for (var i=0;i<deptId.data.length;i++) {
            //一级菜单信息
-           let deptinfo = deptId.data[i].data
+           var deptid = deptId.data[i].id;
+           var  deptname = deptId.data[i].deptName;
            //根据一级菜单查询出来的二级菜单的信息
-           let deptInfo=getDeptInfoById(deptid);
-           for(var j=0;j<deptInfo.data.length;j++){
-               let deptInfo = deptInfo.data[j].data
-           let html = "";
-           let stc="";
-           html = "<li name='fir' style='margin-bottom:15px'>" +
-
+           var deptInfo = getDeptInfoById(deptid);
+           //肯定是里面的这个for循环写的有问题
+        for (var j = 0; j < deptInfo.data.length; j++) {
+             var hkplbj=deptInfo.data[j]
+             var   hkpid = hkplbj.id
+             var   hkpName = hkplbj.deptName
+               html ="<li name='" +deptid+ "'>" +
                "<div>" +
-               "<div class='treefir'>研究院</div>" +
+               "<div class='treefir'>"+deptname+"</div>" +
                "<a class='layui-btn layui-btn-xs fedit' style='margin-left:20px;'><i class='layui-icon layui-icon-edit'></i>编辑</a>" +
                "<a class='layui-btn layui-btn-xs layui-btn-edit fadd' ><i class='layui-icon layui-icon-edit'></i>添加二级部门</a>" +
                "<a class='layui-btn layui-btn-xs layui-btn-danger fdel'><i class='layui-icon layui-icon-delete'></i>移除</a>" +
                "</div>" +
-
+               "</li>"+
                "<ul class='treechild'>" +
 
-              "<li name='fir'>" +
+              "<li name='" + hkpid + "'>" +
                "<div>" +
-               "<div class='terrchildc'>研究院</div>" +
+               "<div class='terrchildc'>"+hkpName+"</div>" +
                "<a class='layui-btn layui-btn-xs button sedit' style='margin-left:20px;'><i class='layui-icon layui-icon-edit'></i>编辑</a>" +
                "<a class='layui-btn layui-btn-xs button sdel' ><i class='layui-icon layui-icon-delete'></i>移除</a>" +
                "</div>" +
-               "</li>" +
+
 
               /*"<li name='child2'>" +
                "<div>" +
@@ -204,11 +205,10 @@
 
                "</ul>" +
                "</li>";
-               stc='<li><div>'+deptId.data[i].deptName+'</div>'+'<ul><li><div>'+deptInfo.data[j].deptName+'</div></li></ul></li>';
-               html = html+stc;
-           $("#demo").append(html);
+               html = html;
            }
-       }
+        }
+           $("#demo").append(html);
     });
 
 //添加信息框	
@@ -378,9 +378,10 @@ layui.use('layer', function(){ //独立版的layer无需执行这一句
                     alert("请输入内容")
                 }else{
                     $.post({
-                        url:"addDeptInfo.do",
+                        url:"uptateDeptInfos.do",
                         data:{
-                            deptName:role
+                            deptName:role,
+                            id:id
                         },
                         success:function(data){
                             if(data.data){

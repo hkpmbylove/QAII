@@ -33,13 +33,13 @@ public class deptController {
 	//部门列表
 	@ResponseBody
 	@RequestMapping(value="findDeptInfoList.do",method=RequestMethod.POST,produces="application/json;charset=UTF-8")
-	public Layui findDeptInfoList() {
+	public JsonResult findDeptInfoList() {
 		List<DeptInfo> deptInfo=deptInfoService.findAllRoleList();
 		int count =deptInfo.size();
 			if(deptInfo!=null) {
-				return Layui.data(count, deptInfo);
+				return new JsonResult(deptInfo);
 			}else {
-				return Layui.data(count, deptInfo);
+				return new JsonResult();
 			}
 		
 		
