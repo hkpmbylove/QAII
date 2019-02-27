@@ -88,7 +88,6 @@ public class deptController {
     		return  new JsonResult();
     		
     	}
-        
     }
     
     //chaxun bumen xingming 

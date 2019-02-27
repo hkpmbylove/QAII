@@ -38,8 +38,16 @@
 <body id="bodyHei">
 	<div class="tool">
 		<div class="layui-btn-group demoTable">
-		  <span class="limit">所有单位</span>
+		  <span class="limit">所有部门</span>
 		</div>
+        <div class="site-demo-button" id="layerDemo" style="float: right;margin-right: 115px;">
+            <button data-method="offset" data-type="auto" class="layui-btn layui-btn-normal export" >
+                添加部门
+            </button>
+        </div>
+		<%--<button class="layui-btn btn export " >
+			添加部门
+		</button>--%>
 
 	</div>
 	<div class="systemBox">
@@ -50,13 +58,14 @@
 		</script>
 		<script type="text/html" id="barDemo">
 			<a class="layui-btn layui-btn-xs button" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+            <a class="layui-btn layui-btn-xs button" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>添加二级部门</a>
 			<a class="layui-btn layui-btn-xs button" lay-event="del"><i class="layui-icon layui-icon-delete"></i>移除</a>
 		</script>
-		<div class="site-demo-button" id="layerDemo" style="margin-bottom: 0;">
+		<%--<div class="site-demo-button" id="layerDemo" style="margin-bottom: 0;">
 			<button data-method="offset" data-type="auto" class="layui-btn layui-btn-normal systemAdd">
 				<img src="${basePath}/image/add.png" />
 			</button>
-		</div>
+		</div>--%>
 	</div>
 	
 
@@ -69,12 +78,12 @@ layui.use('table', function(obj){
   table.render({
     elem: '#systemTest',
     method:'post',
-    url:'listScienceUnit.do',
+    url:'findDeptInfoList.do',
     cellMinWidth: 80,
     cols: [[
-      {field:'id', title:'ID', type:'numbers',width:220},
-      {field:'deptName', title:'单位', templet: '#bar'},
-      {field:'sex', title:'operation', templet: '#barDemo',width:220}
+      {field:'id', title:'ID', type:'numbers',width:80},
+      {field:'deptName', title:'部门', templet: '#bar'},
+      {field:'sex', title:'operation', templet: '#barDemo',width:380}
     ]],
 	  data:obj//数据填充id为部门个数，department为部门名称
   });
@@ -87,7 +96,7 @@ layui.use('table', function(obj){
       layer.confirm('真的删除行么', function(index){
           let arr=data.id;
           $.post({
-          	url:"deleteScienceUnit.do",
+          	url:"dellDeptInfo.do",
           	data:{
           		"requestDate" : arr
           	},
@@ -106,14 +115,14 @@ layui.use('table', function(obj){
     } else if(obj.event === 'edit'){
       //layer.alert('编辑行：<br>'+ JSON.stringify(data.deptName))
     	var edit='<div class="layui-form-item" style="padding:15px;padding-bottom:0px;">'+
-		'<label style="padding:9px 5px;">单位修改</label>'+
+		'<label style="padding:9px 5px;">部门编辑</label>'+
 		'<input id="sys-edit" name="interest" lay-filter="aihao" value="'+
 		data.deptName+
 		'" style="margin-left:10px;height:36px;width:120px;color:#888;border:1px solid #d7d7d7;border-radius:3px;">'+
 		'</input>'+
 		'</div>';
 		layer.open({
-		  type: '单位修改',
+		  type: '部门编辑', 
 		  content:edit //这里content是一个普通的String,
 		  ,btn: ['提交修改', '关闭']
 		  ,yes: function(index, layero){
@@ -123,7 +132,7 @@ layui.use('table', function(obj){
 		    var id=data.id;
 		    
 			$.post({
-				url:"updateScienceUnit.do",
+				url:"uptateDeptInfo.do",
 				data:{
 					deptName:role,
 					id:id
@@ -165,7 +174,7 @@ layui.use('layer', function(){ //独立版的layer无需执行这一句
       var type = othis.data('type')
       ,text = othis.text();
       var addedit='<div class="layui-form-item" style="padding:15px;padding-bottom:0px;">'+
-		'<label style="padding:9px 5px;">单位添加</label>'+
+		'<label style="padding:9px 5px;">部门添加</label>'+
 		'<input id="sys-add" name="interest" lay-filter="aihao" style="margin-left:10px;height:36px;width:120px;color:#888;border:1px solid #d7d7d7;border-radius:3px;">'+
 		'</input>'+
 		'</div>';
@@ -182,7 +191,7 @@ layui.use('layer', function(){ //独立版的layer无需执行这一句
 	    	alert("请输入内容")
 	    }else{
 			$.post({
-				url:"insertScienceUnit.do",
+				url:"addDeptInfo.do",
 				data:{
 					deptName:role
 				},

@@ -35,9 +35,9 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.qaii.domain.deptChildinfo">
-    insert into dept_childinfo (id, dept_name, pid
+    insert into dept_childinfo (dept_name, pid
       )
-    values (#{id,jdbcType=INTEGER}, #{deptName,jdbcType=VARCHAR}, #{pid,jdbcType=INTEGER}
+    values (#{deptName,jdbcType=VARCHAR}, #{pid,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.qaii.domain.deptChildinfo">

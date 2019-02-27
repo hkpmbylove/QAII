@@ -110,6 +110,20 @@
 			    </div>
 			  </div>
 		</div>
+			<div class="layui-col-xs12 layui-col-md12">
+				<div class="layui-form-item">
+					<div class="mumberBox">
+						<label class="layui-form-label mumber">主要人员信息</label>
+					</div>
+					<div class="layui-input-block">
+						<table class="layui-table cretables" id="peoplework" lay-filter="cydemo"></table>
+						<script type="text/html" id="cyDemo">
+							<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+						</script>
+
+					</div>
+				</div>
+			</div>
 		<div class="layui-col-xs6 layui-col-md6">
 			 <div class="layui-form-item">
 			    <label class="layui-form-label">所属孵化器</label>
@@ -135,14 +149,7 @@
 			  </div>
 		</div>
 		<div class="layui-col-xs6 layui-col-md6">
-			<%--<div class="layui-form-item itemadd">
-				<label class="layui-form-label">上传营业执照</label>
-				<div class="layui-input-block">
-					<div class="layui-upload">
-					  <input type="text" name="i1" lay-verify="title" autocomplete="off" class="layui-input" id="test3" disabled="">
-					</div>
-				</div>
-			</div>--%>
+
 			<div class="layui-form-item">
 				<label class="layui-form-label">上传营业执照</span></label>
 				<div class="layui-input-block">
@@ -155,6 +162,21 @@
 			</div>
 		</div>
 	</div>
+	<!--股东及出资信息-->
+	  <div class="layui-row contern">
+		  <h1>股东及出资信息 </h1>
+		  <div class="layui-col-xs12 layui-col-md12">
+			  <div class="createbox">
+				  <div class="layui-form-item itemadd">
+					  <label class="layui-form-label createlabel" id="isThousandSailEnterprise">是否“千帆计划”入库企业</label>
+					  <div class="layui-input-block createblock">
+						  <input type="radio" name="isThousandSailEnterprise" value="0" title="否" checked="" disabled="">
+						  <input type="radio" name="isThousandSailEnterprise" value="1" title="是" disabled="">
+					  </div>
+				  </div>
+			  </div>
+		  </div>
+	  </div>
 	<!-- 创新能力 -->
 	<div class="layui-row contern">
 	  	<h1>创新能力 </h1>
@@ -293,10 +315,41 @@ layui.use(['layer','form', 'layedit', 'laydate','element','upload','table'], fun
 	      ,{field:'shareholderName', title: '股东名称'}
 	      ,{field:'contributionProportion',title: '出资比例', sort: true}
 	      ,{field:'contributionTime',title: '出资时间', sort: true}
-	      ,{field:'shareholderPosition', title: '股东职务', width: '30%', minWidth: 100}
 	    ]],
 	    data:obj.data
 	  });
+    //主要成员信息
+    table.render({
+        elem: '#peoplework'
+        ,method:'post'
+        ,url:'selectIndusStackInfo.do?id='+id
+        ,cellMinWidth: 100
+        ,cols: [[
+            {field:'id', title: '序号',type:'numbers',sort: true, minWidth: 100}
+            ,{field:'shareholderName', title: '人员名称'}
+            ,{field:'contributionProportion',title: '人员职务', sort: true}
+            ,{field: 'sex', title: '操作',toolbar: '#barDemo',fixed: 'right',width:500}
+        ]],
+        data:obj.data
+    });
+    table.on('tool(cydemo)', function(obj){ //股东删除操作 xijiang
+        var data = obj.data;
+        if(obj.event === 'del'){
+            layer.confirm('真的删除行么', function(index){
+                $.post({
+                    url:"deleteIncubatorStockEquity.do",
+                    data:{
+                        "id" : data.id
+                    },
+                    success:function(data){
+                        obj.del();
+                        layer.alert("删除成功");
+                    }
+                })
+                layer.close(index);
+            });
+        }
+    });
   //变更信息显示
   table.render({
 	    elem: '#table2'
