@@ -6,6 +6,9 @@ import org.apache.poi.ss.formula.functions.T;
 import java.util.List;
 
 public interface deptChildinfoMapper {
+
+    int deletePid(Integer id);
+
     int deleteByPrimaryKey(Integer id);
 
     int insert(deptChildinfo record);

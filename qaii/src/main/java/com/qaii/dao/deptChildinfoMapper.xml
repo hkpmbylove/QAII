@@ -34,6 +34,11 @@
     delete from dept_childinfo
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
+  <delete id="deletePid" parameterType="java.lang.Integer">
+    delete from dept_childinfo
+    where pid = #{id,jdbcType=INTEGER}
+  </delete>
   <insert id="insert" parameterType="com.qaii.domain.deptChildinfo">
     insert into dept_childinfo (dept_name, pid
       )

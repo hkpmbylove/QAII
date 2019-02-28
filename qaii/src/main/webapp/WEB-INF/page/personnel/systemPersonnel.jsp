@@ -133,9 +133,12 @@
 <script src="${basePath}/commen/layui/layui.js"></script>
 <script>
     $(document).ready(function(){
-        var html="";
-        //获取一级菜单信息
-        var deptId=getDeptId();
+        let deptid="";
+        let html="";
+        let stc="";
+        let deptInfo="";
+        //获取一级菜单信息deptId为一级菜单所有信息
+        let deptId=getDeptId();
         function getDeptId() {
             var result=null;
             $.ajax({
@@ -168,47 +171,47 @@
         }
        for (var i=0;i<deptId.data.length;i++) {
            //一级菜单信息
-           var deptid = deptId.data[i].id;
-           var  deptname = deptId.data[i].deptName;
-           //根据一级菜单查询出来的二级菜单的信息
-           var deptInfo = getDeptInfoById(deptid);
-           //肯定是里面的这个for循环写的有问题
-        for (var j = 0; j < deptInfo.data.length; j++) {
-             var hkplbj=deptInfo.data[j]
-             var   hkpid = hkplbj.id
-             var   hkpName = hkplbj.deptName
-               html ="<li name='" +deptid+ "'>" +
+           deptid = deptId.data[i].id;
+           let deptname = deptId.data[i].deptName;
+           html = "<li name='" + deptid + "'>" +
                "<div>" +
-               "<div class='treefir'>"+deptname+"</div>" +
+               "<div class='treefir'>" + deptname + "</div>" +
                "<a class='layui-btn layui-btn-xs fedit' style='margin-left:20px;'><i class='layui-icon layui-icon-edit'></i>编辑</a>" +
                "<a class='layui-btn layui-btn-xs layui-btn-edit fadd' ><i class='layui-icon layui-icon-edit'></i>添加二级部门</a>" +
                "<a class='layui-btn layui-btn-xs layui-btn-danger fdel'><i class='layui-icon layui-icon-delete'></i>移除</a>" +
                "</div>" +
-               "</li>"+
-               "<ul class='treechild'>" +
-
-              "<li name='" + hkpid + "'>" +
-               "<div>" +
-               "<div class='terrchildc'>"+hkpName+"</div>" +
-               "<a class='layui-btn layui-btn-xs button sedit' style='margin-left:20px;'><i class='layui-icon layui-icon-edit'></i>编辑</a>" +
-               "<a class='layui-btn layui-btn-xs button sdel' ><i class='layui-icon layui-icon-delete'></i>移除</a>" +
-               "</div>" +
-
-
-              /*"<li name='child2'>" +
-               "<div>" +
-               "<div class='terrchildc'>研究院</div>" +
-               "<a class='layui-btn layui-btn-xs button sedit' style='margin-left:20px;'><i class='layui-icon layui-icon-edit'></i>编辑</a>" +
-               "<a class='layui-btn layui-btn-xs button sdel' ><i class='layui-icon layui-icon-delete'></i>移除</a>" +
-               "</div>" +
-               "</li>" +*/
-
-               "</ul>" +
-               "</li>";
-               html = html;
-           }
-        }
+               "</li>"
+           html = html;
            $("#demo").append(html);
+           //根据一级菜单查询出来的二级菜单的信息deptInfo为二级菜单所有信息
+           deptInfo = getDeptInfoById(deptid);
+           for (let j=0;j<deptInfo.data.length;j++) {
+               let SeconddeptId = deptInfo.data[j].id
+               let SeconddeptName = deptInfo.data[j].deptName
+               stc = "<ul class='treechild'>" +
+                   "<li name='" + SeconddeptId + "'>" +
+                   "<div>" +
+                   "<div class='terrchildc'>" + SeconddeptName + "</div>" +
+                   "<a class='layui-btn layui-btn-xs button sedit' style='margin-left:20px;'><i class='layui-icon layui-icon-edit'></i>编辑</a>" +
+                   "<a class='layui-btn layui-btn-xs button sdel' ><i class='layui-icon layui-icon-delete'></i>移除</a>" +
+                   "</div>" +
+
+
+                   /*"<li name='child2'>" +
+                    "<div>" +
+                    "<div class='terrchildc'>研究院</div>" +
+                    "<a class='layui-btn layui-btn-xs button sedit' style='margin-left:20px;'><i class='layui-icon layui-icon-edit'></i>编辑</a>" +
+                    "<a class='layui-btn layui-btn-xs button sdel' ><i class='layui-icon layui-icon-delete'></i>移除</a>" +
+                    "</div>" +
+                    "</li>" +*/
+
+                   "</ul>" +
+                   "</li>";
+               $("#demo").append(stc);
+           }
+
+       }
+
     });
 
 //添加信息框	
@@ -328,6 +331,7 @@ layui.use('layer', function(){ //独立版的layer无需执行这一句
             ,yes: function(index, layero){
                 //提交修改按钮
                 var role=$("#sys-add").val();
+                console.log(id);
                 if(role==null){
                     alert("请输入内容")
                 }else{
@@ -357,7 +361,22 @@ layui.use('layer', function(){ //独立版的layer无需执行这一句
     /*一级删除*/
     $("#demo").on("click", ".fdel", function(){
         let id=$(this).parents("li").attr("name");
-        alert("段落被点击了del。"+id);
+        layer.confirm('真的删除行么', function(index){
+            $.post({
+                url:"dellDeptInfo.do",
+                data:{
+                    "requestDate" : id
+                },
+                success:function(data){
+                    if(data.data){
+                        layer.alert("删除成功");
+                    }else{
+                        layer.alert("移除失败")
+                    }
+
+                }
+            })
+        })
     });
     /*二级修改*/
     $("#demo").on("click", ".sedit", function(){
@@ -374,6 +393,8 @@ layui.use('layer', function(){ //独立版的layer无需执行这一句
             ,yes: function(index, layero){
                 //提交修改按钮
                 var role=$("#sys-add").val();
+                console.log(id);
+                console.log(1111);
                 if(role==null){
                     alert("请输入内容")
                 }else{
@@ -385,9 +406,9 @@ layui.use('layer', function(){ //独立版的layer无需执行这一句
                         },
                         success:function(data){
                             if(data.data){
-                                alert("添加成功")
+                                alert("修改成功")
                             }else{
-                                alert("添加失败")
+                                alert("修改失败")
                             }
                         }
                     })
@@ -402,8 +423,23 @@ layui.use('layer', function(){ //独立版的layer无需执行这一句
     });
     /*二级删除*/
     $("#demo").on("click", ".sdel", function(){
-        let id=$(this).parents("li").attr("name");
-       /* alert("段落被点击了sdel。"+id);*/
+        let ids=$(this).parents("li").attr("name");
+        layer.confirm('真的删除行么', function(index){
+            $.post({
+                url:"dellDeptInfos.do",
+                data:{
+                    "requestDate" : ids
+                },
+                success:function(data){
+                    if(data.data){
+                        layer.alert("删除成功");
+                    }else{
+                        layer.alert("移除失败")
+                    }
+
+                }
+            })
+        })
     });
      //获取一级菜单Id
 

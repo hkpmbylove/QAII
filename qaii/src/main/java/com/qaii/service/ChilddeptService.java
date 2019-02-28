@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface ChilddeptService {
 
+        int deletePid(Integer id);
+
         int deleteByPrimaryKey(Integer id);
 
         int insert(deptChildinfo record);

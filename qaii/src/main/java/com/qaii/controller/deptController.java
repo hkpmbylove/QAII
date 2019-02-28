@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.qaii.service.ChilddeptService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,7 +24,8 @@ import com.qaii.util.Layui;
 public class deptController {
 	@Resource
 	private DeptInfoService deptInfoService;
-	
+	@Resource
+	private ChilddeptService childdeptService;
 	
 	@RequestMapping("dept.do")
 	public String dept(){
@@ -51,6 +53,8 @@ public class deptController {
     @RequestMapping(value="dellDeptInfo.do", method=RequestMethod.POST,produces="application/json;charset=UTF-8")
     public JsonResult DellempInfo(@RequestParam(value = "requestDate") Integer id ){
      	int row=deptInfoService.dellDeptInfoByid(id);
+     	//这里是为了执行在删除一级菜单的时候将其下属的二级菜单也删除掉
+		int rows=childdeptService.deletePid(id);
     	if(row!=0) {
     		return  new JsonResult(row);
     	}else {

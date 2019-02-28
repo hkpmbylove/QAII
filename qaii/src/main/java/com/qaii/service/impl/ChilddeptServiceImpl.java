@@ -58,4 +58,9 @@ public class ChilddeptServiceImpl implements ChilddeptService {
     public int updateDeptInfoById(deptChildinfo record) {
         return deptChildinfoMapper.updateDeptInfoById(record);
     }
+
+    @Override
+    public int deletePid(Integer id) {
+        return deptChildinfoMapper.deletePid(id);
+    }
 }
