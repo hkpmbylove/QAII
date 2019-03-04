@@ -22,6 +22,13 @@
     from sci_work
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectworkName"  resultType="java.lang.String">
+    select distinct
+    work_Author
+    from sci_work where work_Author is not null
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sci_work
     where id = #{id,jdbcType=INTEGER}
@@ -242,6 +249,15 @@
   </insert>
 
   <select id="listNotPass" resultMap="BaseResultMap">
+    select
+    *
+    from sci_work where
+    <if test="name!= null and name!= ''">
+      work_Author like concat('%',#{name},'%')
+    </if>
+  </select>
+
+  <select id="selectInfoByName" parameterType="java.lang.String" resultMap="BaseResultMap">
   SELECT * FROM sci_work WHERE is_pass IS NULL OR is_pass = 0
   </select>
 

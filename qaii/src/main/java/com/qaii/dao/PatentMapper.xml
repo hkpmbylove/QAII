@@ -39,27 +39,26 @@
   </select>
 
   <select id="selectpatentName"  resultType="java.lang.String">
-    select
+    select distinct
     pat_Author
-    from sci_patent
+    from sci_patent where pat_Author is not null
   </select>
 
   <select id="selectpatentName1"  resultType="java.lang.String">
-    select
-    pat_ApplyPer
-    from sci_patent
+    select distinct pat_ApplyPer from sci_patent where pat_ApplyPer is not null
   </select>
 
   <select id="selectpatentName2"  resultType="java.lang.String">
-    select
-    pat_InvoicePer
-    from sci_patent
+    select distinct pat_InvoicePer from sci_patent where pat_InvoicePer is not null
   </select>
 
-  <select id="selectInfoByName"  resultMap="BaseResultMap">
+  <select id="selectInfoByName"  parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     *
-    from sci_patent where pat_Author like CONCAT('%',#{name},'%')or pat_ApplyPer like CONCAT('%',#{name},'%') or pat_InvoicePer like CONCAT('%',#{name},'%')
+    from sci_patent where
+    <if test="name!= null and name!= ''">
+     pat_Author like concat('%',#{name},'%') or pat_ApplyPer like concat('%',#{name},'%') or pat_InvoicePer like concat('%',#{name},'%')
+    </if>
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.qaii.domain.Work;
 import org.apache.ibatis.annotations.Param;
+import org.apache.poi.ss.formula.functions.T;
 
 public interface WorkMapper {
     int deleteByPrimaryKey(Integer id);
@@ -37,6 +38,9 @@ public interface WorkMapper {
     List<String> selectPathBytableName(@Param(value = "Tablename") String Tablename);
     List<String> selectPathBytableNamePath(@Param(value = "Tablename") String Tablename);
     List<String> selectqueUrl();
-
+    //著作
+    List<String> selectworkName();
+    //著作
+    List<T> selectInfoByName(@Param("name")String name);
     int countMessageNotice();
 }

@@ -30,6 +30,24 @@
     SELECT a.*,b.Path FROM sci_trademark AS a LEFT JOIN sci_trademarkimg AS b ON a.eid=b.id
    where a.id = #{id,jdbcType=INTEGER} 
   </select>
+
+  <select id="selectInfoByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    *
+    from sci_trademark where
+    <if test="name!= null and name!= ''">
+      tradm_ApplyPer like concat('%',#{name},'%') or tradm_InvoicePer like concat('%',#{name},'%')
+    </if>
+  </select>
+
+  <select id="selecttrademarkName"  resultType="java.lang.String">
+    SELECT distinct tradm_ApplyPer FROM sci_trademark where tradm_ApplyPer is not null
+  </select>
+
+  <select id="selecttrademarkName1"  resultType="java.lang.String">
+    SELECT distinct tradm_InvoicePer FROM sci_trademark where tradm_InvoicePer is not null
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sci_trademark
     where id = #{id,jdbcType=INTEGER}

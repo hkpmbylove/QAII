@@ -1,6 +1,8 @@
 package com.qaii.dao;
 
 import com.qaii.domain.AwardPersonal;
+import org.apache.ibatis.annotations.Param;
+import org.apache.poi.ss.formula.functions.T;
 
 import java.util.List;
 
@@ -26,4 +28,8 @@ public interface AwardPersonalMapper {
     List<AwardPersonal> listPersonal();
 
     AwardPersonal getRecord(Integer id);
+
+    List<String> selectawardpersonalName();
+
+    List<T> selectInfoByName(@Param("name")String name);
 }

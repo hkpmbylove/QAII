@@ -1,6 +1,8 @@
 package com.qaii.dao;
 
 import com.qaii.domain.IndustryAttendMeeting;
+import org.apache.ibatis.annotations.Param;
+import org.apache.poi.ss.formula.functions.T;
 
 import java.util.List;
 
@@ -20,5 +22,9 @@ public interface IndustryAttendMeetingMapper {
     List<IndustryAttendMeeting> listRecords();
 
     IndustryAttendMeeting getRecords(Integer id);
+
+    List<String> selectAttendMeetingName();
+
+    List<T> selectInfoByName(@Param("name")String name);
 
 }

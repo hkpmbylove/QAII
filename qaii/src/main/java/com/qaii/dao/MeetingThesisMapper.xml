@@ -30,6 +30,28 @@
     from sci_meetingthesis
     where id = #{id,jdbcType=BIGINT}
   </select>
+
+  <select id="selectInfoByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    *
+    from sci_meetingthesis where
+    <if test="name!= null and name!= ''">
+      Author like concat('%',#{name},'%') or Communicate_author like concat('%',#{name},'%')
+    </if>
+  </select>
+
+  <select id="selectmeetingthesisName" resultType="java.lang.String">
+    select distinct
+    Author
+    from sci_meetingthesis where Author is not null
+  </select>
+
+  <select id="selectmeetingthesisName1"  resultType="java.lang.String">
+    select distinct
+    Communicate_author
+    from sci_meetingthesis where Communicate_author is not null
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from sci_meetingthesis
     where id = #{id,jdbcType=BIGINT}

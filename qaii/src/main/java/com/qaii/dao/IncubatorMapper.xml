@@ -44,6 +44,20 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select * from industry_incubator  where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectInfoByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    *
+    from industry_incubator where
+    <if test="name!= null and name!= ''">
+      legal_representative like concat('%',#{name},'%')
+    </if>
+  </select>
+
+  <select id="selectincubatorName" resultType="java.lang.String">
+    select distinct legal_representative from industry_incubator where legal_representative is not null
+  </select>
+
   <select id="selectAlllist" resultMap="BaseResultMap" parameterType="com.qaii.domain.Incubator">
   		select * from industry_incubator
   </select>

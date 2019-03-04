@@ -2,7 +2,10 @@ package com.qaii.dao;
 
 import com.qaii.domain.Copyrightimg;
 
+import java.util.List;
+
 public interface CopyrightimgMapper {
+
     int deleteByPrimaryKey(Integer id);
 
     int insert(Copyrightimg record);

@@ -28,6 +28,34 @@
     from sci_copyright
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectInfoByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    *
+    from sci_copyright where
+    <if test="name!= null and name!= ''">
+      copy_author like concat('%',#{name},'%') or copy_copyrightPerson like concat('%',#{name},'%') or copy_InvoicePer like concat('%',#{name},'%')
+    </if>
+  </select>
+
+  <select id="selectcopyrightName"  resultType="java.lang.String">
+    select distinct
+    copy_author
+    from sci_copyright where copy_author is not null
+  </select>
+
+  <select id="selectcopyrightName1"  resultType="java.lang.String">
+    select distinct
+    copy_copyrightPerson
+    from sci_copyright where copy_copyrightPerson is not null
+  </select>
+
+  <select id="selectcopyrightName2"  resultType="java.lang.String">
+    select distinct
+    copy_InvoicePer
+    from sci_copyright where copy_InvoicePer is not null
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sci_copyright
     where id = #{id,jdbcType=INTEGER}

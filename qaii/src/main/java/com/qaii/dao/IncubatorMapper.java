@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.qaii.domain.CompanyInfo;
 import com.qaii.domain.Incubator;
+import org.apache.ibatis.annotations.Param;
+import org.apache.poi.ss.formula.functions.T;
 
 import java.util.Date;
 import java.util.List;
@@ -30,4 +32,8 @@ public interface IncubatorMapper {
     List<Incubator> selectAlls(String IncubatryName);
     List<Incubator> selectAlllist();
     List<CompanyInfo> selectAlllistByPreThreeMonth();
+
+    List<String> selectincubatorName();
+
+    List<T> selectInfoByName(@Param("name")String name);
 }

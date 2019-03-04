@@ -531,7 +531,7 @@
 
 
   <select id="findAllEmpInfoName" resultType="java.lang.String">
-  	select emp_name from emp_info
+  	select distinct emp_name from emp_info where emp_name is not null
   </select>
   
   <update id="updateByPrimaryKey"   parameterType="com.qaii.domain.EmpInfo" >

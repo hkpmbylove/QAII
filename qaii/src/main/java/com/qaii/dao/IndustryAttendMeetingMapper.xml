@@ -45,8 +45,21 @@
     where Id = #{id,jdbcType=INTEGER}
   </select>
 
+  <select id="selectInfoByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    *
+    from industry_AttendMeeting where
+    <if test="name!= null and name!= ''">
+      Participant like concat('%',#{name},'%')
+    </if>
+  </select>
+
   <select id="listRecords"  resultMap="BaseResultMap">
     select * from industry_AttendMeeting
+  </select>
+
+  <select id="selectAttendMeetingName"  resultType="java.lang.String">
+    select distinct Participant from industry_AttendMeeting where Participant is not null
   </select>
 
   <select id="getRecords" resultMap="CustomMap" parameterType="java.lang.Integer">

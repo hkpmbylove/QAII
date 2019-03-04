@@ -24,10 +24,25 @@
     english_summary, content_type, record_type, level, unit, is_pass, gmt_create, gmt_modified
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from sci_periodicalthesis
-    where id = #{id,jdbcType=BIGINT}
+  select
+  <include refid="Base_Column_List" />
+  from sci_periodicalthesis
+  where id = #{id,jdbcType=BIGINT}
+</select>
+
+  <select id="selectInfoByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    *
+    from sci_periodicalthesis where
+    <if test="name!= null and name!= ''">
+      Author like concat('%',#{name},'%')
+    </if>
+  </select>
+
+  <select id="selectperiodicalthesisName" resultType="java.lang.String">
+    select distinct
+    Author
+    from sci_periodicalthesis where Author is not null
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from sci_periodicalthesis

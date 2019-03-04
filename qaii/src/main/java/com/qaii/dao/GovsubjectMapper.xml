@@ -42,6 +42,21 @@
     from sci_govsubject
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectInfoByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    *
+    from sci_govsubject where
+    <if test="name!= null and name!= ''">
+      govsub_ProjectPer like concat('%',#{name},'%')
+    </if>
+  </select>
+
+  <select id="selectProjectPerName"  resultType="java.lang.String">
+    select distinct
+    govsub_ProjectPer
+    from sci_govsubject where govsub_ProjectPer is not null
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sci_govsubject
     where id = #{id,jdbcType=INTEGER}

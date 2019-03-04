@@ -28,6 +28,21 @@
     from industry_stockequity
     where incubator_id = #{incubatorId,jdbcType=INTEGER}
   </select>
+
+  <select id="selectInfoByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    *
+    from industry_stockequity where
+    <if test="name!= null and name!= ''">
+      shareholder_name like concat('%',#{name},'%')
+    </if>
+  </select>
+
+  <select id="selectstockequityName" resultType="java.lang.String">
+    select distinct
+    shareholder_name
+    from industry_stockequity where shareholder_name is not null
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from industry_stockequity
     where id = #{id,jdbcType=INTEGER}

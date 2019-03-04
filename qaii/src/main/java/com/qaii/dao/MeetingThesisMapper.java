@@ -3,6 +3,8 @@ package com.qaii.dao;
 import java.util.List;
 
 import com.qaii.domain.MeetingThesis;
+import org.apache.ibatis.annotations.Param;
+import org.apache.poi.ss.formula.functions.T;
 
 public interface MeetingThesisMapper {
     int deleteByPrimaryKey(Long id);
@@ -26,4 +28,9 @@ public interface MeetingThesisMapper {
     MeetingThesis getMessage(long id);
     
     List<MeetingThesis> listNotPass();
+
+    List<String> selectmeetingthesisName();
+    List<String> selectmeetingthesisName1();
+
+    List<T> selectInfoByName(@Param("name")String name);
 }

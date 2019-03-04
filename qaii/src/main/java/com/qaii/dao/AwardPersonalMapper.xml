@@ -29,6 +29,22 @@
     from industry_awardpersonal
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectInfoByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    *
+    from industry_awardpersonal where
+    <if test="name!= null and name!= ''">
+      person_name like concat('%',#{name},'%')
+    </if>
+  </select>
+
+  <select id="selectawardpersonalName" resultType="java.lang.String">
+    select distinct
+    person_name
+    from industry_awardpersonal where person_name is not null
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from industry_awardpersonal
     where id = #{id,jdbcType=INTEGER}

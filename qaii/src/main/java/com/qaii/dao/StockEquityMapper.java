@@ -3,6 +3,8 @@ package com.qaii.dao;
 import java.util.List;
 
 import com.qaii.domain.StockEquity;
+import org.apache.ibatis.annotations.Param;
+import org.apache.poi.ss.formula.functions.T;
 
 public interface StockEquityMapper {
     int deleteByPrimaryKey(Integer id);
@@ -21,4 +23,8 @@ public interface StockEquityMapper {
     int updateByPrimaryKey(StockEquity record);
 
     int deleteByIncubatorId(Integer[] id);
+
+    List<String> selectstockequityName();
+
+    List<T> selectInfoByName(@Param("name")String name);
 }

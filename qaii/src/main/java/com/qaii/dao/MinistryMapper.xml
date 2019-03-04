@@ -63,6 +63,27 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
 
+  <select id="selectInfoByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    *
+    from industry_ministry where
+    <if test="name!= null and name!= ''">
+      contact_person like concat('%',#{name},'%') or ownself_contact_person like concat('%',#{name},'%')
+    </if>
+  </select>
+
+  <select id="selectministryName" resultType="java.lang.String">
+    select distinct
+    contact_person
+    from industry_ministry where contact_person is not null
+  </select>
+
+  <select id="selectministryName1" resultType="java.lang.String">
+    select distinct
+    ownself_contact_person
+    from industry_ministry where ownself_contact_person is not null
+  </select>
+
   <select id="selectCountNums" parameterType="java.lang.String" resultType="java.lang.Integer">
     select
     count(*)
